@@ -1,5 +1,5 @@
-require("dotenv").config();
-var axios = require("axios");
+dotenv = require("dotenv").config();
+axios = require("axios");
 var keys = require("./keys.js");
 var fs = require("fs");
 var request = require("request");
@@ -40,7 +40,7 @@ switch (command) {
 };
 
 function omdb(movie) {
-    var omdbURL = "http://www.omdbapi.com/?t=" + movie + "&apikey=" + omdbKey + "&plot=short&tomatoes=true";
+    var omdbURL = "http://www.omdbapi.com/?t=" + movie + "&apikey=" + "10d8c1c8" + "&plot=short&tomatoes=true";
 
     request(omdbURL, function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -68,6 +68,8 @@ function omdb(movie) {
     });
 
 }
+
+
 
 function spotifyThisSong(song) {
     spotify.search({ type: 'track', query: song, limit: 1 }, function (error, data) {
