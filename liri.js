@@ -89,3 +89,11 @@ function spotifyThisSong(song) {
         }
     });
 }
+
+function doThing(){
+    fs.readFile('random.txt', "utf8", function(error, data){
+      var txt = data.split(',');
+  
+      spotifyThisSong(txt[1]);
+    });
+  }
