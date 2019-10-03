@@ -1,20 +1,18 @@
 dotenv = require("dotenv").config();
-axios = require("axios");
+var axios = require("axios");
 var keys = require("./keys.js");
 var fs = require("fs");
 var request = require("request");
 var Spotify = require("node-spotify-api");
-var dateFormat = require("dateFormat");
-
+var moment = require('moment');
+// var bandsintown = require('bandsintown')("codingbootcamp");
 var spotify = new Spotify(keys.spotify);
-var omdbKey = keys.omdb.api_key;
-
 var command = process.argv[2];
 var secondCommand = process.argv[3];
 
 switch (command) {
     case "concert-this":
-        showConcert();
+        concertThis(secondCommand);
         break;
 
     case "spotify-this-song":
@@ -40,6 +38,21 @@ switch (command) {
         console.log("Try again")
 };
 
+function concertThis(artist) {
+    // var artist = value;
+
+    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+        .then(function (response) {
+            console.log("Name of the venue:", response.data[0].venue.name);
+            console.log("Venue location:", response.data[0].venue.city);
+            var eventDate = moment(response.data[0].datetime).format('MM/DD/YYYY');
+            console.log("Date of the Event:", eventDate);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
 function omdb(movie) {
     var omdbURL = "http://www.omdbapi.com/?t=" + movie + "&apikey=" + "10d8c1c8" + "&plot=short&tomatoes=true";
 
@@ -55,7 +68,7 @@ function omdb(movie) {
             console.log("Plot: " + body.Plot);
             console.log("Actors: " + body.Actors);
             console.log("Rotten Tomatoes Rating: " + body.tomatoRating);
-           
+
 
         } else {
             console.log("Error occurred.")
@@ -77,13 +90,13 @@ function spotifyThisSong(song) {
         if (!error) {
             for (var i = 0; i < data.tracks.items.length; i++) {
                 var songData = data.tracks.items[i];
-                //artist
+
                 console.log("Artist: " + songData.artists[0].name);
-                //song name
+
                 console.log("Song: " + songData.name);
-                //spotify preview link
+
                 console.log("Preview URL: " + songData.preview_url);
-                //album name
+
                 console.log("Album: " + songData.album.name);
                 console.log("-----------------------");
             }
@@ -93,40 +106,11 @@ function spotifyThisSong(song) {
     });
 }
 
-function doThing(){
-    fs.readFile('random.txt', "utf8", function(error, data){
-      var txt = data.split(',');
-  
-      spotifyThisSong(txt[1]);
+function doThing() {
+    fs.readFile('random.txt', "utf8", function (error, data) {
+        var txt = data.split(',');
+
+        spotifyThisSong(txt[1]);
     });
-  }
-
-  var showConcert = function(artist){
-    var region = ""
-    var queryUrl = "https://rest.bandsintown.com/artists/" + artist.replace(" ", "+") + "/events?app_id=codingbootcamp"
-    
-    
-    request(queryUrl, function(err, response, body){
-        
-        if (!err && response.statusCode === 200) {
-            
-            var concertInfo = JSON.parse(body)
-            
-            outputData(artist + " concert information:")
-
-            for (i=0; i < concertInfo.length; i++) {
-                
-                region = concertInfo[i].venue.region
-                 
-                if (region === "") {
-                    region = concertInfo[i].venue.country
-                }
-
-                
-                outputData("Venue: " + concertInfo[i].venue.name)
-                outputData("Location: " + concertInfo[i].venue.city + ", " + region);
-                outputData("Date: " + dateFormat(concertInfo[i].datetime, "mm/dd/yyyy"))
-            }
-        }
-    })
 }
+
