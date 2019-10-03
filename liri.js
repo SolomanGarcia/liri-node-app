@@ -4,6 +4,7 @@ var keys = require("./keys.js");
 var fs = require("fs");
 var request = require("request");
 var Spotify = require("node-spotify-api");
+var dateFormat = require("dateFormat");
 
 var spotify = new Spotify(keys.spotify);
 var omdbKey = keys.omdb.api_key;
@@ -99,3 +100,33 @@ function doThing(){
       spotifyThisSong(txt[1]);
     });
   }
+
+  var showConcert = function(artist){
+    var region = ""
+    var queryUrl = "https://rest.bandsintown.com/artists/" + artist.replace(" ", "+") + "/events?app_id=codingbootcamp"
+    
+    
+    request(queryUrl, function(err, response, body){
+        
+        if (!err && response.statusCode === 200) {
+            
+            var concertInfo = JSON.parse(body)
+            
+            outputData(artist + " concert information:")
+
+            for (i=0; i < concertInfo.length; i++) {
+                
+                region = concertInfo[i].venue.region
+                 
+                if (region === "") {
+                    region = concertInfo[i].venue.country
+                }
+
+                
+                outputData("Venue: " + concertInfo[i].venue.name)
+                outputData("Location: " + concertInfo[i].venue.city + ", " + region);
+                outputData("Date: " + dateFormat(concertInfo[i].datetime, "mm/dd/yyyy"))
+            }
+        }
+    })
+}
