@@ -53,12 +53,12 @@ It should run Spotify-this-song for “I want it That way”, by the Backstreet 
 
 ![Screen shot](images/do.png)
 
-## Technologies used:
+## Technologies Used:
 * JavaScript
 * Node.js
 * NPM Packages
 
-## API's Used
+## API's Used:
 * Spotify API
 * OMDB API
 * Bands in Town API
