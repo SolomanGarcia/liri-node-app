@@ -26,6 +26,8 @@ This will show the following information about the song in your terminal/bash wi
 -	A preview link of the song from Spotify
 -	The album that the song is from
 
+If no parameter is given for song search the default song is Ice Ice Baby by Vanilla Ice.
+
 ![Screen shot](images/spotify.png)
 
 ## movie-this:
@@ -39,6 +41,8 @@ This will output the following information to your terminal/bash window:
 -	Language of the movie.
 -	Plot of the movie.
 -	Actors in the movie.
+
+If no movie title is searched for the default search is for the movie, Mr. Nobody.
 
 ![Screen shot](images/movie.png)
 
