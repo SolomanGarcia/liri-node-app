@@ -9,4 +9,4 @@ LIRI is a command line node app that takes in parameters and gives you back data
 
 ## concert-this: 
 
-![Screen shot](images/concert-this.jpg)
+![Screen shot](images/concert-this.png)
