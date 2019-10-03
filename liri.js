@@ -19,7 +19,7 @@ switch (command) {
         if (secondCommand) {
             spotifyThisSong(secondCommand)
         } else {
-            spotifyThisSong("The Sign");
+            spotifyThisSong("Ice Ice Baby");
         }
         break;
 
